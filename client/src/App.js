@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
+import { 
+  BrowserRouter,
+  Route,
+  Link,
+  Switch,
+  Redirect 
+} from 'react-router-dom';
 import './App.css';
 import Homepage from './components/Homepage';
+import EventDetails from './components/EventDetails';
 
 class App extends Component {
   constructor(props) {
@@ -16,9 +24,7 @@ class App extends Component {
   
   render() {
     return (
-      <div>
         <Homepage />
-      </div>
     );
   }
 }

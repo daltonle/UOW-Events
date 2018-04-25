@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import Events from './Events';
+import { 
+  BrowserRouter,
+  Route,
+  Link,
+  Switch,
+  Redirect 
+} from 'react-router-dom';
 import EventDetails from './EventDetails';
 import './styles/Homepage.css';
 
@@ -8,7 +14,6 @@ class Homepage extends Component {
     super(props);
     this.state = {
       events: [],
-      renderList: true
     }
     
   }
@@ -16,28 +21,30 @@ class Homepage extends Component {
   componentDidMount() {
     fetch('/api/browse')
       .then(res => res.json())
-      .then(events => this.setState({events: events, renderList: true}));
+      .then(events => this.setState({events}));
   }
 
-  handleClickEvent(id){
-    console.log(id);
-    return <EventDetails id={id} />
-  }
-  
   render() {
-    {/*let eventItems;
+    let eventItems;
     if (this.state.events) {
       eventItems = this.state.events.map (event =>
         <li key={event.id}>
-              {event.title}: {event.location}
+          <Link to={`/browse/${event.id}`}>{event.title}</Link>: {event.location}
         </li>
       );
-    }*/}
+    }
+    
     return (
-    <div className="Homepage">
-        <Events events={this.state.events} onClick={this.handleClickEvent.bind(this)}/>
-        {/*<ul>{eventItems}</ul>*/}
-      </div>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" render={ () => {
+            return <ul>{eventItems}</ul>
+          }} />
+          <Route path={`/browse/:id`} render={ (props) => {
+            return <EventDetails id={props.match.params.id} />
+          }} />
+        </Switch>
+      </BrowserRouter>
     );
   }
 }
