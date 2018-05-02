@@ -1,0 +1,67 @@
+body {
+	color: #2A363B;
+	margin: 0px;
+	background: #faf4f6;
+}
+
+.container {
+	display: grid;
+	grid-template-columns: 20% auto;
+}
+
+.filter {
+	grid-column-start: 1;
+	grid-column-end: 2;
+	padding: 15px 0px 0px 15px;
+}
+
+.evt-container {
+	grid-column-start: 2;
+	grid-column-end: 3;
+	padding: 15px 15px 0px 15px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.evt-card {
+	width: 300px;
+	min-height: 250px;
+	padding: 10px 0;
+	margin: 20px;
+	border-radius: 5px;
+}
+
+.evt-card img {
+	width: 300px;
+	max-height: 200px;
+}
+
+.evt-card h2 {
+	margin: 7px 5px 5px 5px;
+}
+
+.evt-card p {
+	margin: 5px 5px 5px 5px;
+}
+
+.card-time {
+	float: left;
+	text-align: center;
+	margin: 7px 5px 5px 5px;
+}
+
+.card-desc {
+	float: left;
+	max-width: 80%;
+}
+
+.date-thumbnail__month {
+	color: #E84A5F;
+	font-size: 15px;
+}
+
+.date-thumbnail__day {
+	color: #2A363B;
+	font-size: 20px;
+}
+

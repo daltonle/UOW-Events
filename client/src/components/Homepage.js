@@ -7,6 +7,8 @@ import {
   Redirect 
 } from 'react-router-dom';
 import EventDetails from './EventDetails';
+import TopBar from './TopBar';
+import LoginPage from './LoginPage';
 import './styles/Homepage.css';
 
 class Homepage extends Component {
@@ -27,21 +29,65 @@ class Homepage extends Component {
   render() {
     let eventItems;
     if (this.state.events) {
-      eventItems = this.state.events.map (event =>
-        <li key={event.id}>
-          <Link to={`/browse/${event.id}`}>{event.title}</Link>: {event.location}
-        </li>
-      );
+      eventItems = this.state.events.map (event => {
+        let d = new Date(event.start);
+        let months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+
+        return (
+          <div className="evt-card">
+					  <div className="card-media">
+						  <img src={event.image} alt="Attached image" />
+		  			</div>
+			  		<div className="card-content">
+				    		<div className="card-time">
+		    					<p className="date-thumbnail__month">{months[d.getMonth()]}</p>
+		    					<p className="date-thumbnail__day">{d.getDate()}</p>
+		     				</div>
+		    				<div className="card-desc">
+                  <Link to={`/browse/${event.id}`}><h2>{event.title}</h2></Link>
+		    					<p>{event.desc}</p>							
+		    				</div>
+		  			</div>
+		  		</div>
+        );
+      });
     }
     
     return (
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" render={ () => {
-            return <ul>{eventItems}</ul>
-          }} />
           <Route path={`/browse/:id`} render={ (props) => {
-            return <EventDetails id={props.match.params.id} />
+            return <EventDetails id={props.match.params.id} history={props.history}/>
+          }} />
+          <Route exact path="/" render={ (props) => {
+            return <div>
+              <TopBar isLoggedIn={false} history={props.history}/>
+	          	<br />
+	          	<div className="container">
+	          		<div className="filter">
+	          			<h3>Filter</h3>
+	          			<h4>Location</h4>
+	          			<select name="location">
+		          			<option value="main">Wollongong Main Campus</option>
+	          				<option value="sws">South Western Sydney</option>
+	          				<option value="inno">Innovation Campus</option>
+	          				<option value="all">Anywhere</option>
+	          			</select><br/>
+	          			<h4>Time</h4>
+	          			<select name="time">
+	          				<option value="thisWk">This week</option>
+	          				<option value="nextWk">Next week</option>
+	          				<option value="all" selected>Anytime</option>
+		          		</select><br/>		
+		          	</div>
+	          		<div class="evt-container">
+	          			{eventItems}
+	          		</div>
+	          	</div>
+            </div>
+          }} />
+					<Route path={`/login`} render={ (props) => {
+            return <LoginPage history={props.history} />
           }} />
         </Switch>
       </BrowserRouter>

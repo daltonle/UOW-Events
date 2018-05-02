@@ -1,0 +1,36 @@
+.nav-wrapper {
+	display: block;
+	height: 100%;
+	overflow: hidden;
+	/*vertical-align: middle;*/
+	background-color: cyan;
+}
+
+.quick-link {
+	text-align: center;
+	float: right;
+	margin: 10px 15px 10px 15px;
+}
+
+.quick-link a {
+	font-size: 20px;
+	text-decoration: none;
+}
+
+.logo {
+	margin-left: 5px;
+	height: inherit;
+}
+
+.logo img {
+	float: left;
+	max-height: 40px;
+	margin: 10px 5px 10px 5px;
+}
+
+.logo h1 {
+	float:left;
+	color: #2A363B;
+	font-size: 25px;
+	margin: 10px 0px 10px 5px;
+}

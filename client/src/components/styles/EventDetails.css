@@ -1,0 +1,26 @@
+.evt-details-container {
+    display: grid;
+    grid-template-columns: 60% auto;
+    grid-template-rows: 20% auto;
+    padding: 0px 70px 0px 70px;
+}
+
+.evt-details-title {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+
+.evt-details-book {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+}
+
+.evt-details-left {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+}
+
+.evt-details-right {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+}
