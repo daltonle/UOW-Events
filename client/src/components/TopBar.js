@@ -5,28 +5,29 @@ class TopBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        
+      
     }
   }
 
   handleBrowse() {
-      this.props.history.push("/");
+    this.props.history.push("/");
   }
 
   handleLogIn() {
-      this.props.history.push("/login");
+    this.props.history.push("/login");
   }
 
   handleLogOut(){
-      this.props.history.push("/");
+    sessionStorage.clear();
+    this.props.history.push("/");
   }
 
-  handleAccount(){
-      this.props.history.push("/account");
+  handleProfile(){
+    this.props.history.push("/profile");
   }
 
   handleSignUp() {
-      this.props.history.push("/signup");
+    this.props.history.push("/signup");
   }
 
   render() {
@@ -44,7 +45,7 @@ class TopBar extends Component {
             </div>
             <div className="quick-link">
                 {sessionStorage.getItem('id') ? 
-                    <a onClick={this.handleAccount.bind(this)}>Account</a> :
+                    <a onClick={this.handleProfile.bind(this)}>Profile</a> :
                     <a onClick={this.handleSignUp.bind(this)}>Sign up</a>
                 }
             </div>

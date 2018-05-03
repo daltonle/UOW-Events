@@ -1,26 +1,127 @@
 import React, { Component } from 'react';
 import './styles/EventDetails.css';
 import TopBar from './TopBar'; 
-import { runInThisContext } from 'vm';
+import {NotificationManager} from 'react-notifications';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 class EventDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      event: {}
+      event: {},
+      isBooked: false
     }
     this.displayTime = this.displayTime.bind(this);
+    this.displayRegisterButton = this.displayRegisterButton.bind(this);
+    this.handleRegister = this.handleRegister.bind(this);
+    this.handleUnregister = this.handleUnregister.bind(this);
   }
 
   componentDidMount() {
     const link = '/api/browse/' + this.props.id;
     fetch(link)
       .then(res => res.json())
-      .then(event => this.setState({event}));
-  } 
+      .then(_event => {
+        if (!sessionStorage.getItem('id')) {
+          this.setState({event: _event, isBooked: false});
+        }
+        else {
+          let userEvents = JSON.parse(sessionStorage.getItem('events'));
+          let flag = false;
+          for (var i = 0; i < userEvents.length; i++) {
+            // eslint-disable-next-line
+            if (_event.id == userEvents[i])
+              flag = true;
+              break;
+          }
+          this.setState({event: _event, isBooked: flag});
+        }
+        
+      });
+  }
 
-  handleRegister() {
-    
+  handleRegister = () => {
+    confirmAlert({
+      title: `Confirm payment. AUD ${this.state.event.price}`,
+      message: 
+        `Card Type: ${sessionStorage.getItem('cardType')} |
+        Card Number: ${sessionStorage.getItem('cardNumber')}`,
+      buttons: [
+        {
+          label: 'Confirm',
+          onClick: () => {
+            fetch('/booking/1', {
+              method: 'post',
+              headers: new Headers({'Content-Type': 'application/json'}),
+              body: JSON.stringify({
+                userId: sessionStorage.getItem('id'),
+                eventId: this.state.event.id
+              })
+            })
+            .then(res => res.json())
+            .then(user => {
+              sessionStorage.setItem('events', JSON.stringify(user.events));
+            });
+            this.setState({isBooked: true});
+            NotificationManager.success('This event has been added to your events.', 'Registered');
+          }
+        },
+        {
+          label: 'Cancel',
+          onClick: () => {}
+        },
+        {
+          label: 'Change card',
+          onclick: () => this.history.push('/profile')
+        }
+      ]
+    })
+  }
+
+  handleUnregister() {
+    confirmAlert({
+      title: 'You may not be refunded for this event.',
+      message: 'Make sure to read our refunding policies before continue.',
+      buttons: [
+        {
+          label: 'Confirm',
+          onClick: () => {
+            fetch('/booking/0', {
+              method: 'post',
+              headers: new Headers(),
+              body: JSON.stringify({
+                userId: sessionStorage.getItem('id'),
+                eventId: this.state.event.id
+              })
+            })
+            .then(res => res.json())
+            .then(user => {
+              sessionStorage.setItem('id', user.id);
+              sessionStorage.setItem('username', user.username);
+              sessionStorage.setItem('events', JSON.stringify(user.events));
+            });
+            this.setState({isBooked: false});
+            NotificationManager.success('This event has been removed from your events.', 'Un-registered');
+          }
+        },
+        {
+          label: 'Cancel',
+          onClick: () => {}
+        }
+      ]
+    })
+  }
+
+  displayRegisterButton = () => {
+    if (!sessionStorage.getItem('id'))
+      return <button className="event-register" onClick={NotificationManager.warning('You have to log in first', 'Warning', 3000)}>Register</button>
+    else {
+      if (this.state.isBooked) {
+        return <button className="event-unregister" onClick={this.handleUnregister}>Unregister</button>
+      }
+      else return <button className="event-register" onClick={this.handleRegister}>Register</button>
+    }
   }
   
   displayTime() {
@@ -42,7 +143,7 @@ class EventDetails extends Component {
   render() {
     return (
       <div className="EventDetails">
-        <TopBar isLoggedIn={false} history={this.props.history}/>
+        <TopBar history={this.props.history}/>
         <br/>
         <div className="evt-details-container">
           <div className="evt-details-title">
@@ -50,7 +151,7 @@ class EventDetails extends Component {
           </div>
           <div className="evt-details-book">
             Are you going?<br/>
-            <button onClick={this.handleRegister.bind(this)}>Register</button>
+            {this.displayRegisterButton()}
           </div>
           <div className="evt-details-left">
             <p>{this.state.event.desc}</p>
@@ -60,6 +161,8 @@ class EventDetails extends Component {
             {this.displayTime()}
             <h3>Where</h3>
             {this.state.event.venue}
+            <h3>Price</h3>
+            {this.state.event.price === 0 ? "Free" : `AUD ${this.state.event.price}`}
           </div>
         </div>
       </div>

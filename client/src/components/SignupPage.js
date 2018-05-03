@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
-import './styles/LoginPage.css';
+import './styles/SignupPage.css';
 
-class LoginPage extends Component {
+class SignupPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        username: '',
-        password: ''
+      email: '',
+      username: '',
+      password: ''
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
   }
 
   handleUsernameChange(e) {
@@ -22,19 +24,18 @@ class LoginPage extends Component {
     this.setState({password: e.target.value});
   }
 
-  componentWillMount() {
-    if (sessionStorage.getItem('id')) {
-      this.props.history.push("/");
-    }
+  handleEmailChange(e) {
+    this.setState({email: e.target.value});
   }
 
   handleSubmit(e) {
     e.preventDefault();
 
-    fetch('/login', {
+    fetch('/signup', {
       method: 'post',
       headers: new Headers({'Content-Type': 'application/json'}),
       body: JSON.stringify({
+        email: this.state.email,
         username: this.state.username,
         password: this.state.password
       })
@@ -43,45 +44,34 @@ class LoginPage extends Component {
     .then(data => {
       sessionStorage.setItem('id', data.id);
       sessionStorage.setItem('username', data.username);
-      sessionStorage.setItem('events', JSON.stringify(data.events));
-      sessionStorage.setItem('cardType', data.cardType);
-      sessionStorage.setItem('cardNumber', data.cardNumber);
-      //console.log(`${JSON.stringify(data.events)}, ${JSON.parse(JSON.stringify(data.events))[0]}`)
+      sessionStorage.setItem('events', data.stringify(data.events));
     });
 
     this.forceUpdate();
   }
 
-  handleRedirect() {
-    this.props.history.push("/signup");
-  }
-
   render() {
-    if (!sessionStorage.getItem('id')) {
-      return (
-        <div className="LoginPage">
-		  	  <div className="logo">
-		  		  <h1>UOW Events</h1>
-		  	  </div>
-		  	  <div className="login-form">
-			  	  <form onSubmit={this.handleSubmit}>
-				  	  <input type="text" placeholder="username" value={this.state.username} onChange={this.handleUsernameChange}/><br/>
-					    <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePasswordChange}/><br/>
-					    <button type="submit">LOG IN</button>
-		  		  </form><br/>
-            Hint: You can log in with your UOW Account<br/>
-            Don't have one? <a onClick={this.handleRedirect.bind(this)}>Sign up as guest.</a>
-			    </div>
-		    </div>
-      );
+    if (sessionStorage.getItem('id')) {
+      return <div>{this.props.history.push("/")}</div>
     }
     else {
-      return <div>
-        {this.props.history.push("/")}
-      </div>
+      return (
+        <div className="SignupPage">
+          <div className="logo">
+		  		  <h1>UOW Events - Register</h1>
+		  	  </div>
+		  	  <div className="signup-form">
+			  	  <form onSubmit={this.handleSubmit.bind(this)}>
+              <input type="text" placeholder="email" value={this.state.email} onChange={this.handleEmailChange}/>
+				  	  <input type="text" placeholder="username" value={this.state.username} onChange={this.handleUsernameChange}/><br/>
+					    <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePasswordChange}/><br/>
+					    <button type="submit">Submit</button>
+		  		  </form>
+			    </div>
+        </div>
+      )
     }
-
   }
 }
 
-export default LoginPage;
+export default SignupPage;

@@ -137,6 +137,64 @@ app.get('/api/browse/:eventId', function (req, res) {
     });
 })
 
+app.post('/profile', function(req, res) {
+    let userId = req.body.id;
+
+    let user;
+    // search for userID in database and assign to variable user
+    let user1 = {
+        id: 152634,
+        username: 'ndl991',
+        email: 'ndl991@uowmail.edu.au',
+        name: 'P Sherman',
+        type: 'student',
+        faculty: 'EIS',
+        cardType: 'Debit Mastercard',
+        cardNumber: '5656565685859595',
+        phone: '0123456789',
+        address: '42 Wallaby Way, Sydney'
+    };
+    let user2 = {
+        id: 152634,
+        username: 'abcx56',
+        email: 'abcx.ioru56@gmail.com',
+        name: 'P Sherman',
+        type: 'guest',
+        faculty: 'EIS',
+        cardType: 'Debit Mastercard',
+        cardNumber: '5656565685859595',
+        phone: '0123456789',
+        address: '42 Wallaby Way, Sydney'
+    };
+
+    res.status(200).json(user1);
+})
+
+app.post('/profile/edit', function(req, res) {
+    let _id = req.body.id;
+    let _email = req.body.email;
+    let _phone = req.body.phone;
+    let _address = req.body.address;
+    let _cardType = req.body.cardType;
+    let _cardNumber = req.body.cardNumber;
+
+    // update user details and return new user details below
+    let user = {
+        id: 152634,
+        username: 'abcx56',
+        email: 'abcx.ioru56@gmail.com',
+        name: 'P Sherman',
+        type: 'guest',
+        faculty: 'N/A',
+        cardType: 'VISA',
+        cardNumber: '5656565685859595',
+        phone: '0123456789',
+        address: '42 Wallaby Way, Sydney'
+    } // fake data
+
+    res.status(200).json(user);
+})
+
 app.post('/login', function(req, res) {
     let username = req.body.username;
     let password = req.body.password;
@@ -149,7 +207,10 @@ app.post('/login', function(req, res) {
     flag = true;
     user = {
         id: 1,
-        username: 'ndl991'
+        username: 'ndl991',
+        events: [1, 3],
+        cardType: 'VISA',
+        cardNumber: '4556 5656 8985 8958'
     } // fake test data
 
     if (flag === false) {
@@ -157,6 +218,60 @@ app.post('/login', function(req, res) {
     }
     else {
         res.status(201).json(user);
+    }
+})
+
+app.post('/signup', function(req, res) {
+    let email = req.body.email;
+    let username = req.body.username;
+    let password = req.body.password;
+
+    let flag;
+    let user;
+    // verify email and username here (see if any duplicates in database)
+    // if all good set flag = true, create a new user in database and pass user data into variable user.
+    flag = true;
+    user = {
+        id: 1,
+        username: 'ndl991',
+        events: [1,3],
+        cardType: 'VISA',
+        cardNumber: '4556 5656 8985 8958'
+    } // fake test data
+
+    if (flag === false) {
+        res.status(400).json('Email or username unavailable.');
+    }
+    else {
+        res.status(201).json(user);
+    }
+})
+
+app.post('/booking/:code', function(req, res) {
+    let userId = req.body.userId;
+    let eventId = req.body.eventId;
+    let code = req.params.code;
+
+    let user;
+    if (code === '1') {
+        // add userID into event.attendees in database
+        // set new data for user
+        user = {
+            id: 1,
+            username: 'ndl991',
+            events: [1, 2, 3]
+        } // fake data
+        res.status(200).json(user);
+    }
+    else {
+        // remove userID from event.attendees in database
+        // set new data for user
+        user = {
+            id: 1,
+            username: 'ndl991',
+            events: [1, 3]
+        }
+        res.status(200).json(user);
     }
 })
 

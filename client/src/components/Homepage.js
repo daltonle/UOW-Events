@@ -3,12 +3,13 @@ import {
   BrowserRouter,
   Route,
   Link,
-  Switch,
-  Redirect 
+  Switch
 } from 'react-router-dom';
 import EventDetails from './EventDetails';
 import TopBar from './TopBar';
 import LoginPage from './LoginPage';
+import SignupPage from './SignupPage';
+import Profile from './Profile';
 import './styles/Homepage.css';
 
 class Homepage extends Component {
@@ -36,7 +37,7 @@ class Homepage extends Component {
         return (
           <div className="evt-card">
 					  <div className="card-media">
-						  <img src={event.image} alt="Attached image" />
+						  <img src={event.image} alt="Attached" />
 		  			</div>
 			  		<div className="card-content">
 				    		<div className="card-time">
@@ -56,12 +57,12 @@ class Homepage extends Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path={`/browse/:id`} render={ (props) => {
+          <Route path={`/browse/:id`} key="eventDetails" render={ (props) => {
             return <EventDetails id={props.match.params.id} history={props.history}/>
           }} />
-          <Route exact path="/" render={ (props) => {
+          <Route exact path="/" key="browse" render={ (props) => {
             return <div>
-              <TopBar isLoggedIn={false} history={props.history}/>
+              <TopBar history={props.history}/>
 	          	<br />
 	          	<div className="container">
 	          		<div className="filter">
@@ -80,14 +81,20 @@ class Homepage extends Component {
 	          				<option value="all" selected>Anytime</option>
 		          		</select><br/>		
 		          	</div>
-	          		<div class="evt-container">
+	          		<div className="evt-container">
 	          			{eventItems}
 	          		</div>
 	          	</div>
             </div>
           }} />
-					<Route path={`/login`} render={ (props) => {
+					<Route path={`/login`} key="login" render={ (props) => {
             return <LoginPage history={props.history} />
+          }} />
+          <Route path={`/signup`} key="signup" render={ (props) => {
+            return <SignupPage history={props.history} />
+          }} />
+          <Route path={`/profile`} key="profile" render={ (props) => {
+            return <Profile history={props.history} />
           }} />
         </Switch>
       </BrowserRouter>
