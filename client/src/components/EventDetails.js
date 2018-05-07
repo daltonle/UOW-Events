@@ -13,9 +13,6 @@ class EventDetails extends Component {
       isBooked: false
     }
     this.displayTime = this.displayTime.bind(this);
-    this.displayRegisterButton = this.displayRegisterButton.bind(this);
-    this.handleRegister = this.handleRegister.bind(this);
-    this.handleUnregister = this.handleUnregister.bind(this);
   }
 
   componentDidMount() {
@@ -115,13 +112,17 @@ class EventDetails extends Component {
 
   displayRegisterButton = () => {
     if (!sessionStorage.getItem('id'))
-      return <button className="event-register" onClick={NotificationManager.warning('You have to log in first', 'Warning', 3000)}>Register</button>
+      return <button className="event-register" onClick={this.createWarning.bind(this)}>Register</button>
     else {
       if (this.state.isBooked) {
-        return <button className="event-unregister" onClick={this.handleUnregister}>Unregister</button>
+        return <button className="event-unregister" onClick={this.handleUnregister.bind(this)}>Unregister</button>
       }
-      else return <button className="event-register" onClick={this.handleRegister}>Register</button>
+      else return <button className="event-register" onClick={this.handleRegister.bind(this)}>Register</button>
     }
+  }
+
+  createWarning = () => {
+    NotificationManager.warning('You have to log in first', 'Warning', 3000);
   }
   
   displayTime() {

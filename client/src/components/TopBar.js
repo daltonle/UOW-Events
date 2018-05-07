@@ -35,22 +35,22 @@ class TopBar extends Component {
         <div className="nav-wrapper">
             <div className="logo">
                 <img src="/images/logo.png" alt="logo" />
-                <h1>UOW EVENTS</h1>
+                <span onClick={this.handleBrowse.bind(this)}>UOW EVENTS</span>
             </div>
             <div className="quick-link">
                 {sessionStorage.getItem('id') ? 
-                    <a onClick={this.handleLogOut.bind(this)}>Log out</a> :
-                    <a onClick={this.handleLogIn.bind(this)}>Log in</a>
+                    <a onClick={this.handleLogOut.bind(this)}>LOG OUT</a> :
+                    <a onClick={this.handleLogIn.bind(this)}>LOG IN</a>
                 }
             </div>
             <div className="quick-link">
                 {sessionStorage.getItem('id') ? 
-                    <a onClick={this.handleProfile.bind(this)}>Profile</a> :
-                    <a onClick={this.handleSignUp.bind(this)}>Sign up</a>
+                    <a onClick={this.handleProfile.bind(this)}>PROFILE</a> :
+                    <a onClick={this.handleSignUp.bind(this)}>SIGN UP</a>
                 }
             </div>
             <div className="quick-link">
-                <a onClick={this.handleBrowse.bind(this)}>Browse</a>
+                <a onClick={this.handleBrowse.bind(this)}>BROWSE</a>
             </div>
         </div>
     );

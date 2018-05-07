@@ -40,4 +40,5 @@
 }
 
 .login-form button::hover {
+	cursor: pointer;
 }

@@ -1,9 +1,3 @@
-/*body {
-	color: #2A363B;
-	margin: 0px;
-	background: #faf4f6;
-}*/
-
 .container {
 	display: grid;
 	grid-template-columns: 20% auto;
@@ -12,7 +6,75 @@
 .filter {
 	grid-column-start: 1;
 	grid-column-end: 2;
-	padding: 15px 0px 0px 15px;
+	margin: 35px 0px 0px 29px;
+	padding: 10px 10px 0 10px;
+	height: 304px;
+	border: none;
+	border-radius: 5px;
+	background-color: #fff;
+	box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+}
+
+.filter-form-title {
+	width: 100%;
+	text-align: center;
+	padding-bottom: 5px;
+	font-weight: 700;
+	font-size: 20px;
+	color: hsl(0,0%,13%);
+}
+
+.filter label {
+	color: #E84A5F;
+}
+
+.filter select{
+	width: 100%;
+	height: 40px;
+	padding: 4px;
+	background-image: none;
+	display: block;
+	font-size: 14px;
+	line-height: 1.25;
+	color: hsl(0,0%,40%); 
+	box-sizing: border-box;
+	font-family: inherit;
+  background-color: transparent;
+  border: none;
+	border-bottom: 1px solid #E84A5F;
+
+	-webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+	background-image:
+    linear-gradient(45deg, transparent 50%, gray 50%),
+    linear-gradient(135deg, gray 50%, transparent 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position:
+    calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px),
+    calc(100% - 2.5em) 0.5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1px 1.5em;
+	background-repeat: no-repeat;
+}
+
+.filter input[type="submit"] {
+	font-size: 12px;
+	line-height: 1;
+	border-radius: 500px;
+	border:none;
+	padding: 11px 32px 9px;
+	color: #fff;
+	background-color: #3fb0ac;
+	display: block;
+	width: 100%;
+}
+
+.filter span {
+	color: hsl(0,0%,40%); 
 }
 
 .evt-container {
@@ -26,9 +88,11 @@
 .evt-card {
 	width: 300px;
 	min-height: 250px;
-	padding: 10px 0;
+	padding: 0 0 10px 0;
 	margin: 20px;
 	border-radius: 5px;
+	background-color: #ffffff;
+	box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
 }
 
 .evt-card img {
@@ -36,32 +100,44 @@
 	max-height: 200px;
 }
 
-.evt-card h2 {
-	margin: 7px 5px 5px 5px;
+.card-desc span {
+	text-decoration-line: none;
+	margin: 15px 5px 7px 8px;
+	font-weight: 700;
+	font-size: 20px;
+	color: hsl(0,0%,13%);
 }
 
-.evt-card p {
-	margin: 5px 5px 5px 5px;
+.card-desc p {
+	margin: 0 5px 5px 8px;
+	font-weight: 400;
+	font-size: 16px;
+	color: hsl(0,0%,29%);
 }
 
 .card-time {
 	float: left;
 	text-align: center;
-	margin: 7px 5px 5px 5px;
+	margin: 5px 10px 0 8px;
 }
 
 .card-desc {
 	float: left;
 	max-width: 80%;
+	margin: 8px 0 0 0;
 }
 
 .date-thumbnail__month {
 	color: #E84A5F;
-	font-size: 15px;
+	font-weight: 400;
+	font-size: 17px;
+	margin: 5px 0px 2px 5px;
 }
 
 .date-thumbnail__day {
 	color: #2A363B;
+	font-weight: 500;
 	font-size: 20px;
+	margin: 0 0px 5px 5px;
 }
 

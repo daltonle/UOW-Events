@@ -19,7 +19,7 @@ app.get('/api/browse', (req, res) => {
             venue: 'Room 3110, Bld. 65',
             host: 'Wellbeing service',
             capacity: 50,
-            desc: 'Iptum blosom do you want to save the turtles? Blosom iptumsempra',
+            desc: 'Iptum blosom do you want to save the turtles? Blosom iptumsempraIptum blosom do you want to save the turtles? Blosom iptumsempra',
             price: 0,
             image: '/images/1.jpg',
             attendees: Int16Array
@@ -137,6 +137,59 @@ app.get('/api/browse/:eventId', function (req, res) {
     });
 })
 
+app.get('/api/browse/filter/:loc/:time', (req, res) => {
+    let location = req.params.loc; // this value will be one of the following ('main', 'sws', 'inno', 'all')
+    let time = req.params.time; // value: ('thisWk', 'nextWk', 'all')
+    console.log(`${location} ${time}`);
+
+    // add code to filter all events and return a string of events
+    let events = [
+        {
+            id: 1,
+            title: 'UOW for the Reefs',
+            start: '2018-03-25T12:25', 
+            finish: '2018-03-25T14:00',
+            venue: 'Room 3110, Bld. 65',
+            host: 'Wellbeing service',
+            capacity: 50,
+            desc: 'Iptum blosom do you want to save the turtles? Blosom iptumsempra',
+            price: 0,
+            image: '/images/1.jpg',
+            attendees: Int16Array
+        },
+
+        {
+            id: 3,
+            title: 'Cure your insomnia',
+            start: '2018-03-25T12:25', 
+            finish: '2018-03-25T14:00',
+            venue: 'Room 3110, Bld. 65',
+            host: 'EIS',
+            capacity: 300,
+            desc: 'Iptum blosom do you want to save the turtles? Blosom iptumsempra',
+            price: 300,
+            image: '/images/3.jpg',
+            attendees: Int16Array
+        },
+
+        {
+            id: 4,
+            title: 'Cure your insomnia',
+            start: '2018-03-25T12:25', 
+            finish: '2018-03-25T14:00',
+            venue: 'Room 3110, Bld. 65',
+            host: 'EIS',
+            capacity: 300,
+            desc: 'Iptum blosom do you want to save the turtles? Blosom iptumsempra',
+            price: 300,
+            image: '/images/4.jpg',
+            attendees: Int16Array
+        }
+    ];
+
+    res.status(200).json(events);
+})
+
 app.post('/profile', function(req, res) {
     let userId = req.body.id;
 
@@ -234,9 +287,9 @@ app.post('/signup', function(req, res) {
     user = {
         id: 1,
         username: 'ndl991',
-        events: [1,3],
-        cardType: 'VISA',
-        cardNumber: '4556 5656 8985 8958'
+        events: [],
+        cardType: '',
+        cardNumber: ''
     } // fake test data
 
     if (flag === false) {
