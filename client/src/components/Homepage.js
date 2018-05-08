@@ -108,9 +108,8 @@ class Homepage extends Component {
                     <option value="all" selected>Anytime</option>
 	          				<option value="thisWk">This week</option>
 	          				<option value="nextWk">Next week</option>
-		          		</select><br/>		
+		          		</select>		
                   <input type="submit" value="Apply"/>
-                  <br/>
                   <span>{this.state.events.length} events displayed.</span>
 		          	</form>
                 { (this.state.events.length === 0) ? 

@@ -22,7 +22,7 @@ app.get('/api/browse', (req, res) => {
             desc: 'Iptum blosom do you want to save the turtles? Blosom iptumsempraIptum blosom do you want to save the turtles? Blosom iptumsempra',
             price: 0,
             image: '/images/1.jpg',
-            attendees: Int16Array
+            attendees: [100, 1002, 1888]
         },
 
         {
@@ -32,11 +32,11 @@ app.get('/api/browse', (req, res) => {
             finish: '2018-03-25T14:00',
             venue: 'Room 3110, Bld. 65',
             host: 'EIS',
-            capacity: 300,
+            capacity: 7,
             desc: 'Iptum blosom do you want to save the turtles? Blosom iptumsempra',
             price: 300,
             image: '/images/2.jpg',
-            attendees: Int16Array
+            attendees: [100, 1002, 1888, 2, 3, 7, 5]
         },
 
         {
@@ -50,7 +50,7 @@ app.get('/api/browse', (req, res) => {
             desc: 'Iptum blosom do you want to save the turtles? Blosom iptumsempra',
             price: 300,
             image: '/images/3.jpg',
-            attendees: Int16Array
+            attendees: [100, 1002, 1888]
         },
 
         {
@@ -64,7 +64,7 @@ app.get('/api/browse', (req, res) => {
             desc: 'Iptum blosom do you want to save the turtles? Blosom iptumsempra',
             price: 300,
             image: '/images/4.jpg',
-            attendees: Int16Array
+            attendees: [100, 1002, 1888]
         }
     ];
     res.json(events);
@@ -82,10 +82,19 @@ app.get('/api/browse/:eventId', function (req, res) {
             venue: 'Room 3110, Bld. 65',
             host: 'Wellbeing service',
             capacity: 50,
-            desc: 'Iptum blosom do you want to save the turtles? Blosom iptumsempra',
+            desc: `Iptum blosom do you want to save the turtles? Blosom iptum
+            sempraIptum blosom do you want to save the turtles? Blosom iptumsempra
+            Iptum blosom do you want to save the turtles? Blosom iptumsempra
+            Iptum blosom do you want to save the turtles? Blosom iptumsempra
+            Iptum blosom do you want to save the turtles? Blosom iptumsempra
+            Iptum blosom do you want to save the turtles? Blosom iptumsempra
+
+            
+            Iptum blosom do you want to save the turtles? Blosom iptumsempra
+            Iptum blosom do you want to save the turtles? Blosom iptumsempra`,
             price: 0,
             image: '/images/1.jpg',
-            attendees: Int16Array
+            attendees: [100, 1002, 1888]
         },
 
         {
@@ -95,11 +104,11 @@ app.get('/api/browse/:eventId', function (req, res) {
             finish: '2018-03-25T14:00',
             venue: 'Room 3110, Bld. 65',
             host: 'EIS',
-            capacity: 300,
+            capacity: 7,
             desc: 'Iptum blosom do you want to save the turtles? Blosom iptumsempra',
             price: 300,
             image: '/images/2.jpg',
-            attendees: Int16Array
+            attendees: [100, 1002, 1888, 2, 3, 7, 5]
         },
 
         {
@@ -113,7 +122,7 @@ app.get('/api/browse/:eventId', function (req, res) {
             desc: 'Iptum blosom do you want to save the turtles? Blosom iptumsempra',
             price: 300,
             image: '/images/3.jpg',
-            attendees: Int16Array
+            attendees: [100, 1002, 1888]
         },
 
         {
@@ -127,7 +136,7 @@ app.get('/api/browse/:eventId', function (req, res) {
             desc: 'Iptum blosom do you want to save the turtles? Blosom iptumsempra',
             price: 300,
             image: '/images/4.jpg',
-            attendees: Int16Array
+            attendees: [100, 1002, 1888]
         }
     ];
 
@@ -140,7 +149,6 @@ app.get('/api/browse/:eventId', function (req, res) {
 app.get('/api/browse/filter/:loc/:time', (req, res) => {
     let location = req.params.loc; // this value will be one of the following ('main', 'sws', 'inno', 'all')
     let time = req.params.time; // value: ('thisWk', 'nextWk', 'all')
-    console.log(`${location} ${time}`);
 
     // add code to filter all events and return a string of events
     let events = [

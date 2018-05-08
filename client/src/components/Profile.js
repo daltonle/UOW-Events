@@ -103,20 +103,17 @@ class Profile extends Component {
           <br/>
           <form className="profile-info-container" onSubmit={this.handleSubmit.bind(this)}>
             <div className="basic-info">
-              <h1>{this.state.user.name} ({this.state.user.id})</h1>
+              <span>{this.state.user.name} ({this.state.user.id})</span>
             </div>
               <div className="contact-info-title">
                 <h2>Contact</h2>
               </div>
               <div className="contact-info-label">
-                <strong>Email</strong>
-                <br/>
-                <strong>Phone</strong>
-                <br/>
-                <strong>Address</strong>
-                <br/>
+                <p>Email</p>
+                <p>Phone</p>
+                <p>Address</p>
                 {(this.state.isEditing) ?
-                  <input type="submit" onClick={this.createNotification('saveSuccess')} value="Save changes"/> :
+                  <input type="submit" onClick={this.createNotification('saveSuccess')} value="Save"/> :
                   <button onClick={this.enableEditing.bind(this)}>Edit <FaEdit/></button>
                 }
               </div>
@@ -126,13 +123,11 @@ class Profile extends Component {
                   value={this.state.user.email} 
                   disabled = {(this.state.isEditing)? "" : "disabled"}
                   onChange={this.handleEmailChange.bind(this)}/>
-                <br/>
                 <input 
                   type="text"
                   value={this.state.user.phone}
                   disabled = {(this.state.isEditing)? "" : "disabled"}
                   onChange={this.handlePhoneChange.bind(this)}/>
-                <br/>
                 <input
                   type="text"
                   value={this.state.user.address}
@@ -143,9 +138,8 @@ class Profile extends Component {
                 <h2>Payment Info</h2>
               </div>
               <div className="payment-info-label">
-                <strong>Card type</strong>
-                <br/>
-                <strong>Card number</strong>
+                <p>Card type</p>
+                <p>Card number</p>
               </div>
               <div className="payment-info-content">
                 <select 
@@ -155,7 +149,6 @@ class Profile extends Component {
                   <option value='Debit Mastercard'>Debit Mastercard</option>
                   <option value='VISA'>VISA</option>
                 </select>
-                <br/>
                 <input
                   type="text"
                   value={this.state.user.cardNumber}

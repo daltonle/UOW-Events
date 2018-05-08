@@ -44,7 +44,7 @@ class SignupPage extends Component {
     .then(data => {
       sessionStorage.setItem('id', data.id);
       sessionStorage.setItem('username', data.username);
-      sessionStorage.setItem('events', data.stringify(data.events));
+      sessionStorage.setItem('events', JSON.stringify(data.events));
     });
 
     this.forceUpdate();
@@ -58,14 +58,14 @@ class SignupPage extends Component {
       return (
         <div className="SignupPage">
           <div className="logo">
-		  		  <h1>UOW Events - Register</h1>
+		  		  <h1>UOW Events<br/>Register</h1>
 		  	  </div>
 		  	  <div className="signup-form">
 			  	  <form onSubmit={this.handleSubmit.bind(this)}>
               <input type="text" placeholder="email" value={this.state.email} onChange={this.handleEmailChange}/>
-				  	  <input type="text" placeholder="username" value={this.state.username} onChange={this.handleUsernameChange}/><br/>
-					    <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePasswordChange}/><br/>
-					    <button type="submit">Submit</button>
+				  	  <input type="text" placeholder="username" value={this.state.username} onChange={this.handleUsernameChange}/>
+					    <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePasswordChange}/>
+					    <input type="submit" value="SUBMIT" />
 		  		  </form>
 			    </div>
         </div>

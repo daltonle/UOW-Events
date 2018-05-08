@@ -65,8 +65,8 @@ class LoginPage extends Component {
 		  	  </div>
 		  	  <div className="login-form">
 			  	  <form onSubmit={this.handleSubmit}>
-				  	  <input type="text" placeholder="username" value={this.state.username} onChange={this.handleUsernameChange}/><br/>
-					    <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePasswordChange}/><br/>
+				  	  <input type="text" placeholder="username" value={this.state.username} onChange={this.handleUsernameChange}/>
+					    <input type="password" placeholder="password" value={this.state.password} onChange={this.handlePasswordChange}/>
 					    <button type="submit">LOG IN</button>
 		  		  </form><br/>
             Hint: You can log in with your UOW Account<br/>
