@@ -1,96 +1,30 @@
 .container {
-	display: grid;
-	grid-template-columns: 20% auto;
+	padding: 0px 70px 40px 70px;
 }
 
-.filter {
-	grid-column-start: 1;
-	grid-column-end: 2;
-	margin: 35px 0px 0px 29px;
-	padding: 10px 10px 0 10px;
-	height: 304px;
-	border: none;
-	border-radius: 5px;
-	background-color: #fff;
-	box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
-}
-
-.filter-form-title {
-	width: 100%;
-	text-align: center;
-	padding-bottom: 5px;
-	font-weight: 700;
-	font-size: 20px;
+.container > h1 {
+	margin: 20px 0 5px 20px;
 	color: hsl(0,0%,13%);
 }
 
-.filter label {
-	color: #E84A5F;
-	margin: 10px 0 5px 5px;
-	display: block;
+.past-events {
+	clear:left;
 }
 
-.filter select{
-	width: 100%;
-	height: 40px;
-	padding: 4px;
-	background-image: none;
-	display: block;
-	font-size: 14px;
-	line-height: 1.25;
-	color: hsl(0,0%,40%); 
-	box-sizing: border-box;
-	font-family: inherit;
-  background-color: transparent;
-  border: none;
-	border-bottom: 1px solid #E84A5F;
-
-	-webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-	background-image:
-    linear-gradient(45deg, transparent 50%, gray 50%),
-    linear-gradient(135deg, gray 50%, transparent 50%),
-    linear-gradient(to right, #ccc, #ccc);
-  background-position:
-    calc(100% - 20px) calc(1em + 2px),
-    calc(100% - 15px) calc(1em + 2px),
-    calc(100% - 2.5em) 0.5em;
-  background-size:
-    5px 5px,
-    5px 5px,
-    1px 1.5em;
-	background-repeat: no-repeat;
-}
-
-.filter input[type="submit"] {
-	font-size: 12px;
-	line-height: 1;
-	border-radius: 500px;
-	border:none;
-	padding: 11px 32px 9px;
-	margin: 20px 0 10px 0;
-	color: #fff;
-	background-color: #3fb0ac;
-	display: block;
-	width: 100%;
-}
-
-.filter span {
-	color: hsl(0,0%,40%);
-	float: right;
+.past-events Link {
+	font-size: 20px;
+	font-weight: 600;
 }
 
 .evt-container {
-	grid-column-start: 2;
-	grid-column-end: 3;
 	padding: 15px 15px 0px 15px;
 	display: flex;
 	flex-wrap: wrap;
 }
 
 .evt-card {
-	width: 300px;
+	float: left;
+	width: 26vw;
 	min-height: 250px;
 	padding: 0 0 10px 0;
 	margin: 20px;
@@ -100,15 +34,15 @@
 }
 
 .evt-card img {
-	width: 300px;
-	max-height: 200px;
+	width: 100%;
+	height: 200px;
 }
 
 .card-desc span {
 	text-decoration-line: none;
 	margin: 15px 5px 7px 8px;
 	font-weight: 700;
-	font-size: 20px;
+	font-size: 18px;
 	color: hsl(0,0%,13%);
 }
 

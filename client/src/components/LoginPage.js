@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './styles/LoginPage.css';
+import {NotificationManager} from 'react-notifications';
 
 class LoginPage extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ class LoginPage extends Component {
   }
 
   componentWillMount() {
-    if (sessionStorage.getItem('id')) {
+    if (localStorage.getItem('id')) {
       this.props.history.push("/");
     }
   }
@@ -31,7 +32,7 @@ class LoginPage extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
-    fetch('/login', {
+    fetch('/api/user/auth', {
       method: 'post',
       headers: new Headers({'Content-Type': 'application/json'}),
       body: JSON.stringify({
@@ -41,12 +42,13 @@ class LoginPage extends Component {
     })
     .then(res => res.json())
     .then(data => {
-      sessionStorage.setItem('id', data.id);
-      sessionStorage.setItem('username', data.username);
-      sessionStorage.setItem('events', JSON.stringify(data.events));
-      sessionStorage.setItem('cardType', data.cardType);
-      sessionStorage.setItem('cardNumber', data.cardNumber);
-      //console.log(`${JSON.stringify(data.events)}, ${JSON.parse(JSON.stringify(data.events))[0]}`)
+      if (!data) {
+        NotificationManager.warning('Please check your username/password.','Can\'t login.', 3000);
+      }
+      else {
+        localStorage.setItem('id', data._id);
+        localStorage.setItem('username', data.username);
+      }
     });
 
     this.forceUpdate();
@@ -57,7 +59,7 @@ class LoginPage extends Component {
   }
 
   render() {
-    if (!sessionStorage.getItem('id')) {
+    if (!localStorage.getItem('id')) {
       return (
         <div className="LoginPage">
 		  	  <div className="logo">

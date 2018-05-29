@@ -18,12 +18,16 @@ class TopBar extends Component {
   }
 
   handleLogOut(){
-    sessionStorage.clear();
+    localStorage.clear();
     this.props.history.push("/");
   }
 
   handleProfile(){
     this.props.history.push("/profile");
+  }
+
+  handleEventMgnt(){
+    this.props.history.push("/events-management");
   }
 
   handleSignUp() {
@@ -38,19 +42,23 @@ class TopBar extends Component {
                 <span onClick={this.handleBrowse.bind(this)}>UOW EVENTS</span>
             </div>
             <div className="quick-link">
-                {sessionStorage.getItem('id') ? 
+                {localStorage.getItem('id') ? 
                     <a onClick={this.handleLogOut.bind(this)}>LOG OUT</a> :
                     <a onClick={this.handleLogIn.bind(this)}>LOG IN</a>
                 }
             </div>
-            <div className="quick-link">
-                {sessionStorage.getItem('id') ? 
-                    <a onClick={this.handleProfile.bind(this)}>PROFILE</a> :
-                    <a onClick={this.handleSignUp.bind(this)}>SIGN UP</a>
-                }
-            </div>
-            <div className="quick-link">
-                <a onClick={this.handleBrowse.bind(this)}>BROWSE</a>
+            {localStorage.getItem('id') ?
+              <div className="dropdown">
+              <a className="quick-link" id="dropdown-btn">ACCOUNT</a><br/><br/>
+              <div className="dropdown-content">
+                <a onClick={this.handleProfile.bind(this)}>Account info</a>
+                <a onClick={this.handleEventMgnt.bind(this)}>Your events</a>
+              </div> 
+              </div> : 
+              <a className="quick-link" onClick={this.handleSignUp.bind(this)}>SIGN UP</a>
+            }
+            <div className="quick-link"onClick={this.handleBrowse.bind(this)}>
+                <a>BROWSE</a>
             </div>
         </div>
     );

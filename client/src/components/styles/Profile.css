@@ -1,8 +1,8 @@
 .profile-info-container {
   display: grid;
-  grid-template-columns: 10% 40% 10% 40%;
-  grid-template-rows: 20% 20% auto;
-  padding: 0px 70px 0px 70px;
+  grid-template-columns: 10% 20% 20% 10% 20% 20%;
+  grid-template-rows: 10% 7% 15% 7% 15% 7% 15% 7% auto;
+  padding: 0px 70px 40px 70px;
 }
 
 .basic-info {
@@ -17,8 +17,12 @@
   color: hsl(0, 0%, 13%);
 }
 
+.profile-info-container h2 {
+  color: hsl(0, 0%, 13%);
+}
+
 .contact-info-title {
-  grid-column: 1 / 3;
+  grid-column: 1 / 4;
   grid-row: 2 / 3;
 }
 
@@ -33,27 +37,105 @@
   grid-row: 3 / 4;
 }
 
+.contact-info-warning {
+  grid-column: 3 / 4;
+  grid-row: 3 / 4;
+}
+
 .payment-info-title {
-  grid-column: 3 / 5;
+  grid-column: 4 / 7;
   grid-row: 2 / 3;
 }
 
 .payment-info-label {
   padding-right: 20px;
-  grid-column: 3 / 4;
+  grid-column: 4 / 5;
   grid-row: 3 / 4;
 }
 
-.payment-info-label p, .contact-info-label p {
+.payment-info-content {
+  grid-column: 5 / 6;
+  grid-row: 3 / 4;
+}
+
+.payment-info-warning {
+  grid-column: 6 / 7;
+  grid-row: 3 / 4;
+}
+
+.account-info-title {
+  grid-column: 1 / 3;
+  grid-row: 4 / 5;
+}
+
+.account-info-label {
+  padding-right: 20px;
+  grid-column: 1 / 2;
+  grid-row: 5 / 6;
+}
+
+.account-info-content {
+  grid-column: 2 / 3;
+  grid-row: 5 / 6;
+}
+
+.account-info-warning {
+  grid-column: 3 / 4;
+  grid-row: 5 / 6;
+}
+
+.upcoming-title {
+  grid-column: 1 / 7;
+  grid-row: 6 / 7;
+}
+
+.upcoming-events {
+  grid-column: 1 / 7;
+  grid-row: 7 / 8;
+}
+
+.past-title {
+  grid-column: 1 / 7;
+  grid-row: 8 / 9;
+}
+
+.past-events {
+  grid-column: 1 / 7;
+  grid-row: 9 / 10;
+}
+
+.payment-info-label p, .contact-info-label p, .account-info-label p {
   font-size: 16px;
   font-weight: 500;
   color: hsl(0, 0%, 13%);
   margin: 20px 0;
 }
 
-.payment-info-content {
-  grid-column: 4 / 5;
-  grid-row: 3 / 4;
+.payment-info-warning p, .contact-info-warning p, .account-info-warning p {
+  font-size: 16px;
+  font-style: italic;
+  color: #E84A5F;
+  margin: 20px 0 20px 15px;
+}
+
+.past-events, .upcoming-events {
+  padding: 0;
+}
+
+.past-events li, .upcoming-events li {
+  font-size: 16px;
+  font-weight: 500;
+  color: hsl(0, 0%, 13%);
+  cursor: pointer;
+  padding: 10px 3px;
+  border-bottom: 1px solid #ddd;
+  list-style-type: none;
+}
+
+.past-events li:hover, .upcoming-events li:hover {
+  background-color: #3fb0ac;
+  color: #fff;
+  box-shadow: 3px 4px 6px -6px hsl(0, 0%, 13%);
 }
 
 .profile-info-container select{
@@ -94,7 +176,7 @@
   box-shadow: 3px 4px 6px -6px hsl(0, 0%, 13%);
 }
 
-.profile-info-container input[type="text"] {
+.profile-info-container input[type="text"], .profile-info-container input[type="password"] {
   width: 250px;
 	height: 30px;
   padding: 4px;
@@ -110,7 +192,7 @@
   transition-duration: 0.4s;
 }
 
-.profile-info-container input[type="text"]:focus {
+.profile-info-container input[type="text"]:focus, .profile-info-container input[type="password"]:focus {
   border-bottom: 1px solid #3fb0ac;
   box-shadow: 3px 4px 6px -6px hsl(0, 0%, 13%);
 }

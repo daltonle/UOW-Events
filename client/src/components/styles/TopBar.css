@@ -13,7 +13,7 @@
 	text-align: center;
 	width: 75px;
 	float: right;
-	margin: 10px 20px 10px 0px;
+	padding: 10px 20px 10px 20px;
 	cursor: pointer;
 }
 
@@ -37,4 +37,47 @@
 	font-size: 17px;
 	margin: 10px 0px 10px 5px;
 	cursor: pointer;
+}
+
+.dropdown {
+  float: right;
+  overflow: hidden;
+}
+
+/* Add a red background color to navbar links on hover */
+.quick-link:hover {
+  background-color: #3e918e;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+	cursor: pointer;
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  width: 115px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  float: none;
+	color: black;
+	font-size: 80%;
+	font-weight: 500;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
 }

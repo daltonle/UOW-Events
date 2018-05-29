@@ -5,6 +5,7 @@ import {NotificationManager} from 'react-notifications';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import FaCalendarO from 'react-icons/lib/fa/calendar-o';
+import moment from 'moment';
 
 class EventDetails extends Component {
   constructor(props) {
@@ -12,71 +13,107 @@ class EventDetails extends Component {
     this.state = {
       event: {},
       isBooked: false,
-      avail: 0
+      avail: 0,
+      hostName: "",
+      hostId: "",
+      isPromo: false,
     }
     this.displayTime = this.displayTime.bind(this);
     this.handleRedirect = this.handleRedirect.bind(this);
   }
 
   componentDidMount() {
-    const link = '/api/browse/' + this.props.id;
-    fetch(link)
+    fetch(`/api/event/${this.props.id}`)
+    .then(res => res.json())
+    .then(_event => {
+      this.setState({event: _event});
+
+      let _avail = _event.capacity - _event.attendees.length;
+      this.setState({avail: _avail});
+
+      if (localStorage.getItem('id')) {
+        fetch(`/api/event/${localStorage.getItem('id')}`)
+        .then(res => res.json())
+        .then(events => {
+          events.forEach(event => {
+            if (event._id === this.state.event._id) {
+              this.setState({isBooked: true});
+            } 
+          })
+        })
+      }
+
+      fetch(`/api/user/id/${_event.host.toString()}`)
       .then(res => res.json())
-      .then(_event => {
-        let _avail = _event.capacity - _event.attendees.length;
-        if (!sessionStorage.getItem('id')) {
-          this.setState({event: _event, isBooked: false, avail: _avail});
-        }
-        else {
-          let userEvents = JSON.parse(sessionStorage.getItem('events'));
-          let flag = false;
-          for (var i = 0; i < userEvents.length; i++) {
-            // eslint-disable-next-line
-            if (_event.id == userEvents[i])
-              flag = true;
-              break;
-          }
-          this.setState({event: _event, isBooked: flag, avail: _avail});
-        }
-        
-      });
+      .then(user => {
+        this.setState({hostName: user.name, hostId: user._id});
+      })
+    });
   }
 
   handleRegister = () => {
-    confirmAlert({
-      title: `Confirm payment. AUD ${this.state.event.price}`,
-      message: 
-        `Card Type: ${sessionStorage.getItem('cardType')} |
-        Card Number: ${sessionStorage.getItem('cardNumber')}`,
-      buttons: [
-        {
-          label: 'Confirm',
-          onClick: () => {
-            fetch('/booking/1', {
-              method: 'post',
-              headers: new Headers({'Content-Type': 'application/json'}),
-              body: JSON.stringify({
-                userId: sessionStorage.getItem('id'),
-                eventId: this.state.event.id
-              })
-            })
-            .then(res => res.json())
-            .then(user => {
-              sessionStorage.setItem('events', JSON.stringify(user.events));
-            });
-            this.setState({isBooked: true});
-            NotificationManager.success('This event has been added to your events.', 'Registered');
-          }
-        },
-        {
-          label: 'Cancel',
-          onClick: () => {}
-        },
-        {
-          label: 'Change card',
-          onClick: () => this.handleRedirect()
-        }
-      ]
+    fetch(`/api/user/id/${localStorage.getItem('id')}`)
+    .then(res => res.json())
+    .then(user => {
+      if ((user.cardType === '' || user.cardType === 'N/A' || user.cardNumber === '' || user.cardNumber === 'N/A') && (this.state.event.price !== 0)) {
+        confirmAlert({
+          title: `Can't register`,
+          message: 
+            `This is a charged event. Please provide your payment details before registering.`,
+          buttons: [
+            {
+              label: 'OK',
+              onClick: () => {}
+            },
+            {
+              label: 'Account Info',
+              onClick: () => {
+                this.props.history.push('/profile');
+              }
+            }
+          ]
+        })
+      }
+      else {
+        confirmAlert({
+          title: `Confirm payment. AU $${this.state.event.price}`,
+          message: 
+            `Card Type: ${user.cardType} |
+            Card Number: ${user.cardNumber}`,
+          buttons: [
+            {
+              label: 'Confirm',
+              onClick: () => {
+                fetch(`/api/booking/1`, {
+                  method: 'post',
+                  headers: new Headers({'Content-Type': 'application/json'}),
+                  body: JSON.stringify({
+                    userId: localStorage.getItem('id'),
+                    eventId: this.props.id
+                  })
+                })
+                .then(res => res.json())
+                .then(_event => this.setState({event: _event}));
+                this.setState({isBooked: true});
+                this.setState({avail: (this.state.avail-1)});
+                NotificationManager.success('This event has been added to your events.', 'Registered');
+              }
+            },
+            {
+              label: 'Cancel',
+              onClick: () => {}
+            },
+            {
+              label: 'Change card',
+              onClick: () => this.handleRedirect()
+            },
+            {
+              label: 'Enter promo code',
+              onClick: () => this.handlePromo()
+            }
+          ]
+        })
+      }
     })
   }
 
@@ -88,21 +125,18 @@ class EventDetails extends Component {
         {
           label: 'Confirm',
           onClick: () => {
-            fetch('/booking/0', {
+            fetch(`/api/booking/0`, {
               method: 'post',
-              headers: new Headers(),
+              headers: new Headers({'Content-Type': 'application/json'}),
               body: JSON.stringify({
-                userId: sessionStorage.getItem('id'),
-                eventId: this.state.event.id
+                userId: localStorage.getItem('id'),
+                eventId: this.props.id
               })
             })
             .then(res => res.json())
-            .then(user => {
-              sessionStorage.setItem('id', user.id);
-              sessionStorage.setItem('username', user.username);
-              sessionStorage.setItem('events', JSON.stringify(user.events));
-            });
+            .then(_event => this.setState({event: _event}));
             this.setState({isBooked: false});
+            this.setState({avail: (this.state.avail+1)})
             NotificationManager.success('This event has been removed from your events.', 'Un-registered');
           }
         },
@@ -118,12 +152,65 @@ class EventDetails extends Component {
     this.props.history.push("/profile");
   }
 
+  handlePromo = () => {
+    if (this.state.event.price === 0) {}
+    else if (this.state.isPromo === true) {
+      NotificationManager.warning("You've already applied a promo code.", "Oops", 3000);
+    } 
+    else {
+      let promoCode = window.prompt("Enter promo code");
+      if (promoCode !== '' && promoCode === this.state.event.promoCode) {
+        let _event = this.state.event;
+        _event.price = _event.price - _event.price*_event.promoValue;
+        this.setState({event: _event, isPromo: true});
+        let val = this.state.event.promoValue*100
+        NotificationManager.success(`Value: ${val}%`, 'Promo code applied.', 3000);
+      }
+      else {
+        confirmAlert({
+          title: `Invalid promo code. Do you still want to proceed with payment?`,
+          message: `Amount: AU $${this.state.event.price}`,
+          buttons: [
+            {
+              label: 'Confirm',
+              onClick: () => {
+                fetch(`/api/booking/1`, {
+                  method: 'post',
+                  headers: new Headers({'Content-Type': 'application/json'}),
+                  body: JSON.stringify({
+                    userId: localStorage.getItem('id'),
+                    eventId: this.props.id
+                  })
+                })
+                .then(res => res.json())
+                .then(_event => this.setState({event: _event}));
+                this.setState({isBooked: true});
+                this.setState({avail: (this.state.avail-1)});
+                NotificationManager.success('This event has been added to your events.', 'Registered');
+              }
+            },
+            {
+              label: 'Cancel',
+              onClick: () => {}
+            }
+          ]
+        })
+      }
+    }
+  }
+
   displayRegisterButton = () => {
-    if (!sessionStorage.getItem('id')) {
+    if (moment(this.state.event.start).isBefore(moment())) {
+      return <button className="event-register" disabled="disabled">Register</button>
+    }
+    else if (!localStorage.getItem('id')) {
       return <button className="event-register" onClick={this.createLogInWarning.bind(this)}>Register</button>
     }
     else {
-      if (this.state.isBooked)
+      if (this.state.hostId === localStorage.getItem('id')) {
+        return <button className="event-register" disabled="disabled">Unregister</button>
+      }
+      else if (this.state.isBooked)
         return <button className="event-unregister" onClick={this.handleUnregister.bind(this)}>Unregister</button>
       else if (this.state.avail !== 0)
         return <button className="event-register" onClick={this.handleRegister.bind(this)}>Register</button>
@@ -136,24 +223,18 @@ class EventDetails extends Component {
   }
   
   displayTime = (ver) => {
-    let start = new Date(this.state.event.start);
-    let finish = new Date(this.state.event.finish);
-    let months = ["January", "February", "March", "April",
-                  "May", "June", "July", "August",
-                  "September", "Octorber", "November", "December"
-                ];
-    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    let start = moment(this.state.event.start);
+    let finish = moment(this.state.event.finish);
     if (ver === 'full') {
       return (
-        <p>{days[start.getDay()]}, {months[start.getMonth()]} {start.getDate()}, {start.getFullYear()}<br/>
-        {start.getHours()}:{start.getMinutes() < 10 ? 0 : ''}{start.getMinutes()} - {finish.getHours()}:
-        {finish.getMinutes() < 10 ? 0 : ''}{finish.getMinutes()} AEDT
+        <p>{start.format('ddd, DD MMMM YYYY @ hh:mmA')} -<br/>
+        {finish.format('ddd, DD MMMM YYYY @ hh:mmA')}
         </p>
       )
     }
     if (ver === 'short') {
       return (
-        <span>{days[start.getDay()]}, {months[start.getMonth()]} {start.getDate()}, {start.getFullYear()}</span>
+        <span>{start.format('ddd, MMM DD')} - {start.format('ddd, MMM DD YYYY')}</span>
       )
     }
   }
@@ -165,18 +246,21 @@ class EventDetails extends Component {
         <div className="evt-details-container">
           <div className="evt-details-title">
             <span>{this.state.event.title}</span><br/>
-            <p>Hosted by {this.state.event.host}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FaCalendarO/>&nbsp;{this.displayTime('short')}</p>
+            <p>Hosted by {this.state.hostName}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FaCalendarO/>&nbsp;{this.displayTime('short')}</p>
           </div>
           <div className="evt-details-book">
             {this.displayRegisterButton()}
             <br/>
+            { (moment(this.state.event.start).isBefore(moment())) ?
+            <span>{this.state.event.attendees.length} people went.</span> :
             <span>{this.state.avail} spots left.</span>
+            }
           </div>
           <div className="evt-details-img">
-            <img src={this.state.event.image} alt=""/>
+            <img src={this.state.event.image} alt={this.state.event.title} onerror={this.src="/images/1.jpg"}/>
           </div>
           <div className="evt-details-left">
-            <p>{this.state.event.desc}</p>
+            <p ref="eventDesc">{this.state.event.desc}</p>
           </div>
           <div className="evt-details-right">
             <h3>When</h3>

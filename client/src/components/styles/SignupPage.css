@@ -57,5 +57,12 @@
 }
 
 .signup-form button::hover {
-    cursor: pointer;
+  cursor: pointer;
+}
+
+.signup-form p {
+	text-align: left;
+	margin: 0 0 0 5px;
+	color: #E84A5F;
+	font-style: italic;
 }
