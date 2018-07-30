@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import TopBar from './TopBar';
 import {Link} from 'react-router-dom';
-import moment from 'moment';
 
 class PastEvents extends Component {
   constructor(props) {

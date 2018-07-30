@@ -120,6 +120,11 @@
 
 .past-events, .upcoming-events {
   padding: 0;
+  margin-left: 0;
+}
+
+ul.past-events {
+  margin-left: 0;
 }
 
 .past-events li, .upcoming-events li {
@@ -197,7 +202,7 @@
   box-shadow: 3px 4px 6px -6px hsl(0, 0%, 13%);
 }
 
-.profile-info-container input[type="submit"], button {
+.profile-info-container input[type="submit"], .profile-info-container button {
   margin-top: 10px;
   width: 120px;
   padding: 10px 15px;

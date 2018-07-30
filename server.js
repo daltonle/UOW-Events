@@ -30,16 +30,6 @@ app.get('/api/event/:eventId', function (req, res) {
     })
 })
 
-app.get('/api/browse/filter/:free/:time', (req, res) => {
-    
-    let time = req.params.time; // value: ('thisWk', 'nextWk', 'all')
-
-    // add code to filter all events and return a string of events
-    
-
-    res.status(200).json(events);
-})
-
 app.get('/api/event/attendees/:userId', function(req, res) {
     Event.getEventsByUser(req.params.userId, function(err, events) {
         res.json(events);

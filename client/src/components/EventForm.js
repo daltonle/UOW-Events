@@ -368,8 +368,8 @@ class EventForm extends Component {
           <p ref="capacityWarning"></p>
         </div>
         <div className="price">
-          <label>Price</label><br/>
-          AU ${(this.state.isFree === false)? 
+          <label>Price</label> (AU $)<br/>
+          {(this.state.isFree === false)? 
           <input
             type="text"
             value={this.state.event.price}
@@ -408,7 +408,7 @@ class EventForm extends Component {
           }
         </div>
         <div className="promoValue">
-          <label>Discount</label>
+          <label>Discount (%)</label>
           {(this.state.isFree === false)? 
           <input
             type="text"
@@ -421,10 +421,11 @@ class EventForm extends Component {
             value={this.state.event.promoValue}
             placeholder="Value"
             onChange={this.handlePromoValueChange.bind(this)} />
-          } %
+          }
           <p ref="promoValueWarning"></p>
         </div>
         <div className="image">
+          <label>Image</label>
           <input
             type="text"
             value={this.state.event.image}

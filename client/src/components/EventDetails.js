@@ -32,7 +32,7 @@ class EventDetails extends Component {
       this.setState({avail: _avail});
 
       if (localStorage.getItem('id')) {
-        fetch(`/api/event/${localStorage.getItem('id')}`)
+        fetch(`/api/event/attendees/${localStorage.getItem('id')}`)
         .then(res => res.json())
         .then(events => {
           events.forEach(event => {
@@ -257,7 +257,7 @@ class EventDetails extends Component {
             }
           </div>
           <div className="evt-details-img">
-            <img src={this.state.event.image} alt={this.state.event.title} onerror={this.src="/images/1.jpg"}/>
+            <img src={this.state.event.image} alt={this.state.event.title} onError={this.src="/images/1.jpg"}/>
           </div>
           <div className="evt-details-left">
             <p ref="eventDesc">{this.state.event.desc}</p>

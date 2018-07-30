@@ -12,7 +12,6 @@ import SignupPage from './SignupPage';
 import Profile from './Profile';
 import EventMgnt from './EventMgnt';
 import PastEvents from './PastEvents';
-import moment from 'moment';
 import './styles/Homepage.css';
 
 class Homepage extends Component {
@@ -48,7 +47,7 @@ class Homepage extends Component {
         return (
           <div className="evt-card">
 					  <div className="card-media">
-						  <img src={event.image} alt={event.title} onerror={this.src="/images/1.jpg"} />
+						  <img src={event.image} alt={event.title} onError={this.src="/images/1.jpg"} />
 		  			</div>
 			  		<div className="card-content">
 				    		<div className="card-time">

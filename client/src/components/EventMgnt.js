@@ -91,7 +91,7 @@ class EventMgnt extends Component {
     let _events = this.state.events;
     for (var i = 0; i < _events.length; i++) {
       if (event._id === _events[i]._id) {
-        _events.splice(1, 1, event);
+        _events.splice(i, 1, event);
         this.setState({events: _events});
         break;
       }
@@ -112,12 +112,15 @@ class EventMgnt extends Component {
             <h2>Your events</h2>
           </div>
           <div className="list-content">
-            {this.state.events.map(event => 
+            {(this.state.events.length === 0) ?
+            <span>No events.</span> : 
+            this.state.events.map(event => 
               <div className="list-item" key={event._id}>
                 <a onClick={this.handleRedirect.bind(this, event._id)}>{moment(event.start).format('DD/MM/YYYY')} - {event.title}</a>
-                <button onClick={this.handleEdit.bind(this, event)}><FaEdit /></button><button onClick={this.handleDelete.bind(this, event)}><FaTrash /></button>
+                <button onClick={this.handleEdit.bind(this, event)}><FaEdit size={30}/> Edit</button><button onClick={this.handleDelete.bind(this, event)}><FaTrash size={30}/> Delete</button>
               </div>
-            )}
+            )
+            }
           </div>
           <div ref="editContainer" className="edit-event-container" style={{display: 'none'}}>
             <h2>Edit event</h2>

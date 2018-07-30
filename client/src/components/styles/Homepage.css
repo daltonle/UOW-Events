@@ -9,11 +9,19 @@
 
 .past-events {
 	clear:left;
-}
-
-.past-events Link {
+	margin: 10px 20px;
 	font-size: 20px;
 	font-weight: 600;
+}
+
+.past-events a {
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+	color: #2A363B;
+}
+
+.past-events a:hover {
+	border-bottom: 2px solid #E84A5F;
 }
 
 .evt-container {

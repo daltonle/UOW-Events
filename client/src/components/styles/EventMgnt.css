@@ -41,7 +41,29 @@
 }
 
 .list-item > a:hover {
-  
   border-bottom: 2px solid #3fb0ac;
   box-shadow: 3px 4px 6px -6px hsl(0, 0%, 13%);
+}
+
+.list-item button {
+  width: 120px;
+  margin: 10px 0;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  color: hsl(0, 0%, 13%);
+}
+
+.list-item button:hover {
+  color: #fff;
+  background-color: #3fb0ac;
+  text-decoration-color: #fff;
 }

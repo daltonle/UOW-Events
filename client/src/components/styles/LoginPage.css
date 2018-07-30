@@ -50,7 +50,7 @@
 	width: 100%;
 }
 
-.login-form button::hover {
+.login-form button:hover {
 	cursor: pointer;
 }
 
