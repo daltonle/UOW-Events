@@ -6,5 +6,5 @@ UOW-Events is an event-management system for community-based events hosted by st
 `cd .../UOW-Events && npm install`<br>
 `cd client && npm install`
 
-// start program<br>
+// start program in dev mode<br>
 `npm run dev`
